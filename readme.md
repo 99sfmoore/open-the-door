@@ -36,7 +36,7 @@ Results also have a "marker-color" property set according to the listing status 
 
 #### Tests
 
-The test suite tests validity of GeoJSON by sending the results of various queries to the [GeoJSONLint](http://www.geojsonlint validation endpoint).  It tests for correctness of queries by verifying counts against the results of direct SQL queries.  Presence and correctness of pagination links, and correctness of status and color information is also tested.
+The test suite tests validity of GeoJSON by sending the results of various queries to the [GeoJSONLint](http://www.geojsonlint) validation endpoint.  It tests for correctness of queries by verifying counts against the results of direct SQL queries.  Presence and correctness of pagination links, and correctness of status and color information is also tested.
 
 #### Areas for Improvement / Next Steps
 
