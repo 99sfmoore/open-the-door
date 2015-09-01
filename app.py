@@ -5,7 +5,7 @@ import math
 import os
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL']
+app.config['SQLALCHEMY_DATABASE_URI'] = 'os.environ['DATABASE_URL']
 db = SQLAlchemy(app)
 
 
@@ -31,18 +31,15 @@ def hello_world():
 def get_listings():
     """return GeoJSON Feature Collection based on url query string"""
     filter_params = create_filter(request.args)
-
+    results = Listing.query.filter(and_(*filter_params)).all()
     if request.args.get('page') or request.args.get('per_page_max'):  #optional pagination arguments
         page = int(request.args.get('page', 1))
         max_per_page = int(request.args.get('per_page_max', 100))
-        results = (
-            Listing.query.filter(and_(*filter_params))
-            .limit(max_per_page).offset((page-1)*max_per_page).all())
-        count = Listing.query.filter(and_(*filter_params)).count()
+        count = len(results)
+        results = results[((page-1)*max_per_page):(page*max_per_page)]
         links = create_links(count, page, max_per_page, request.url)
         return geo_json_feature_collection(results, links)
     else:
-        results = Listing.query.filter(and_(*filter_params))
         return geo_json_feature_collection(results)
 
 
